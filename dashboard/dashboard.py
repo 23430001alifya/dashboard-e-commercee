@@ -22,6 +22,25 @@ df = pd.read_csv(file_path)
 df["order_purchase_timestamp"] = pd.to_datetime(df["order_purchase_timestamp"])
 
 # ======================
+# TOP 20% CUSTOMER
+# ======================
+
+customer_revenue = df.groupby('customer_id')['total_price'].sum().sort_values(ascending=False)
+
+top_20 = int(len(customer_revenue) * 0.2)
+
+top_customers = customer_revenue.head(top_20)
+
+contribution = top_customers.sum() / customer_revenue.sum() * 100
+
+st.subheader("💰 Kontribusi 20% Pelanggan")
+
+st.metric("Persentase Revenue", f"{contribution:.2f}%")
+st.bar_chart(top_customers.head(10))
+
+
+
+# ======================
 # SIDEBAR FILTER
 # ======================
 st.sidebar.title("Menu Dashboard")
