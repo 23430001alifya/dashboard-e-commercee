@@ -12,7 +12,13 @@ st.set_page_config(
 # ======================
 # LOAD DATA
 # ======================
-df = pd.read_csv("main_data.csv")
+import os
+
+base_path = os.path.dirname(__file__)
+file_path = os.path.join(base_path, "main_data.csv")
+
+df = pd.read_csv(file_path)
+
 df["order_purchase_timestamp"] = pd.to_datetime(df["order_purchase_timestamp"])
 
 # ======================
